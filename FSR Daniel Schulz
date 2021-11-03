@@ -1,0 +1,41 @@
+#include <LiquidCrystal.h>
+
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+void setup()
+{
+  Serial.begin(9600);
+  pinMode(A0, INPUT);
+  lcd.begin (16,2);
+  }
+  void loop()
+  {
+    float x=analogRead(0);
+    float R1=0,C=0, R2=0.0,p=0.0 ;
+    double F=0;
+    
+   R1=x*6.61/(1023.1); 
+    
+    R2=1000*((5/R1)-1);
+    
+     F = pow( (R2/5428),(1/-.915) );
+   if(F>.50)
+   {
+   	F=F-.25;
+   }
+     if(F>3.80)
+   {
+   	F=F+.10;
+   }
+   
+    Serial.print("");
+    lcd.print(F);   
+    lcd.print("N");
+    delay(100);
+    Serial.print("");
+    lcd.clear();
+    Serial.print("");
+    p=F*101.97;
+    lcd.print(p);
+    lcd.print("g");
+   
+    }
